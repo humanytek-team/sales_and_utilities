@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_sales_and_utilities_view">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h1>
+                            Sales and Utilities
+                        </h1>
+                        <h2>
+                            <strong>From:</strong>
+                            <span t-field="doc.start_date"/>
+
+                            <strong>To:</strong>
+                            <span t-field="doc.end_date"/>
+                        </h2>
+                        <div>
+                            <div>
+                                <strong>Product:</strong>
+                                <t t-if="doc.product_id">
+                                    <span t-field="doc.product_id"/>
+                                </t>
+                                <t t-if="not doc.product_id">
+                                    <span>All</span>
+                                </t>
+                            </div>
+                            <div>
+                                <strong>Client:</strong>
+                                <t t-if="doc.partner_id">
+                                    <span t-field="doc.partner_id"/>
+                                </t>
+                                <t t-if="not doc.partner_id">
+                                    <span>All</span>
+                                </t>
+                            </div>
+                            <div>
+                                <strong>Salesman:</strong>
+                                <t t-if="doc.salesman_id">
+                                    <span t-field="doc.salesman_id"/>
+                                </t>
+                                <t t-if="not doc.salesman_id">
+                                    <span>All</span>
+                                </t>
+                            </div>
+                            <div>
+                                <strong>Warehouse:</strong>
+                                <t t-if="doc.warehouse_id">
+                                    <span t-field="doc.warehouse_id"/>
+                                </t>
+                                <t t-if="not doc.warehouse_id">
+                                    <span>All</span>
+                                </t>
+                            </div>
+                            <div>
+                                <strong>Provider:</strong>
+                                <t t-if="doc.provider_id">
+                                    <span t-field="doc.provider_id"/>
+                                </t>
+                                <t t-if="not doc.provider_id">
+                                    <span>All</span>
+                                </t>
+                            </div>
+                        </div>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Description</th>
+                                    <th class="text-right">Qty</th>
+                                    <th class="text-right">Cost Total</th>
+                                    <th class="text-right">Price Total</th>
+                                    <th class="text-right">Utility</th>
+                                    <th class="text-right">Utility %</th>
+                                    <th class="text-right">Margin</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="doc.row_ids" t-as="row">
+                                    <td>
+                                        <span t-field="row.product_id"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="row.product_description"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-options='{"precision": 2}' t-field="row.qty"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-options='{"precision": 2}' t-field="row.cost_total"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-options='{"precision": 2}' t-field="row.price_total"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-options='{"precision": 2}' t-field="row.utility"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-options='{"precision": 2}' t-field="row.utility_percentage"/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-options='{"precision": 2}' t-field="row.margin"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th class="text-right">Totals:</th>
+                                    <th class="text-right"><span t-options='{"precision": 2}' t-field="doc.qty_total"/></th>
+                                    <th class="text-right"><span t-options='{"precision": 2}' t-field="doc.cost_total_total"/></th>
+                                    <th class="text-right"><span t-options='{"precision": 2}' t-field="doc.price_total_total"/></th>
+                                    <th class="text-right"><span t-options='{"precision": 2}' t-field="doc.utility_total"/></th>
+                                    <th class="text-right"><span t-options='{"precision": 2}' t-field="doc.utility_percentage_total"/></th>
+                                    <th class="text-right"><span t-options='{"precision": 2}' t-field="doc.margin_total"/></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <report id="report_sales_and_utilities"
+    model="wizard_sales_and_utilities"
+    string="Sales and Utilities Report"
+    name="sales_and_utilities.report_sales_and_utilities_view"
+    file="sales_and_utilities.report_sales_and_utilities"
+    report_type="qweb-pdf" />
+</odoo>

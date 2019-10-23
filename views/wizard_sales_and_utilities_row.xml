@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_wizard_sales_and_utilities_row_tree" model="ir.ui.view">
+        <field name="name">view.wizard_sales_and_utilities.row.tree</field>
+        <field name="model">wizard_sales_and_utilities.row</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="product_id"/>
+                <field name="product_description"/>
+                <field name="qty"/>
+                <field name="cost_total"/>
+                <field name="price_total"/>
+                <field name="utility"/>
+                <field name="utility_percentage"/>
+                <field name="margin"/>
+            </tree>
+        </field>
+    </record>
+</odoo>
