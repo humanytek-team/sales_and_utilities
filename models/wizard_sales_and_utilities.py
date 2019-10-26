@@ -107,19 +107,21 @@ class WizardSalesandUtilities(models.TransientModel):
                     continue
                 cost_unit = line.product_id.get_history_price(invoice.company_id.id, invoice.date or invoice.date_invoice)
                 product_id = line.product_id.id
-                group = (product_id, line.name, cost_unit, line.price_unit)
+                group = (product_id, line.name)
                 if not groups.get(group):
-                    groups[group] = 0
-                groups[group] += line.quantity
+                    groups[group] = [0, 0, 0]
+                groups[group][0] += line.quantity
+                groups[group][1] += cost_unit
+                groups[group][2] += line.price_unit
         WizardSalesandUtilitiesRow = self.env['wizard_sales_and_utilities.row']
-        for group, qty in groups.items():
+        for group, data in groups.items():
             WizardSalesandUtilitiesRow.create({
                 'wizard_id': self.id,
                 'product_id': group[0],
-                'qty': qty,
+                'qty': data[0],
                 'product_description': group[1],
-                'cost_unit': group[2],
-                'price_unit': group[3],
+                'cost_unit': data[1],
+                'price_unit': data[2],
             })
         return {
             'context': self.env.context,
